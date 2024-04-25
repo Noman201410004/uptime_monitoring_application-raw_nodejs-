@@ -18,6 +18,12 @@ handle.handleReqRes=(req,res)=>{
     const decoder=new StringDecoder('utf-8')
     let realData=''
     const chosenHandler=router[trimPath]?router[trimPath]:notFoundHandlers;
+    
+    req.on("data",(buffer)=>{
+    realData+=decoder.write(buffer)
+    })
+    req.on("end",()=>{
+    realData+=decoder.end()
     chosenHandler(requestProperties,(statusCode,payload)=>{
       statusCode=typeof(statusCode)==="number"?statusCode:500;
       payload=typeof(payload)==="object"?payload:{};
@@ -25,17 +31,10 @@ handle.handleReqRes=(req,res)=>{
       res.writeHead(statusCode);
       res.end(payLoadString)
     })
-    req.on("data",(buffer)=>{
-    realData+=decoder.write(buffer)
-    })
-    req.on("end",()=>{
-    realData+=decoder.end()
     console.log(realData);
     console.log(router[trimPath]);
     res.end('hello programmers')
     })
-    
-    
 }
 
 module.exports=handle

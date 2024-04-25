@@ -12,6 +12,7 @@ app.createServer=()=>{
         console.log(`listing a port ${app.config.port}`);
     })
 }
+console.log(app.handleReqRes);
 app.handleReqRes=handleReqRes
 app.createServer()
 console.log(app);
