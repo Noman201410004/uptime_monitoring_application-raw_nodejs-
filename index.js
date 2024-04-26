@@ -1,15 +1,15 @@
 const http=require("http");
 
 const { handleReqRes } = require("./helpers/handleReqRes");
+const environment=require('./helpers/env')
 // adding a scaffolding 
 const app={};
-app.config={
-    port:3000,
-}
+
 app.createServer=()=>{
     const server=http.createServer(app.handleReqRes)
-    server.listen(app.config.port,()=>{
-        console.log(`listing a port ${app.config.port}`);
+    server.listen(environment.port,()=>{
+        console.log(`listing a port ${environment.port}`);
+        
     })
 }
 console.log(app.handleReqRes);
